@@ -454,19 +454,20 @@ const Home = () => {
             </div>
 
             {/* Looking For Driver Panel */}
-            <div ref={vehicleFoundRef} className='fixed inset-x-0 max-w-lg mx-auto w-full z-[100] bottom-0 translate-y-full bg-white rounded-t-3xl shadow-2xl px-4 py-6 pt-10'>
+            <div ref={vehicleFoundRef} className={`fixed inset-x-0 max-w-lg mx-auto w-full z-[100] bottom-0 translate-y-full bg-white rounded-t-3xl shadow-2xl px-4 py-5 pt-8 max-h-[85vh] overflow-y-auto ${waitingForDriver ? 'hidden pointer-events-none' : ''}`}>
                 <LookingForDriver
                     pickup={pickup}
                     destination={destination}
                     fare={fare}
                     vehicleType={vehicleType}
+                    ride={ride}
                     setVehicleFound={setVehicleFound}
                     onCancel={handleCancelRide}
                 />
             </div>
 
             {/* Waiting For Driver Panel */}
-            <div ref={waitingForDriverRef} className='fixed inset-x-0 max-w-lg mx-auto w-full z-[100] bottom-0 translate-y-full bg-white rounded-t-3xl shadow-2xl px-4 py-6 pt-10 max-h-[90vh] overflow-y-auto'>
+            <div ref={waitingForDriverRef} className='fixed inset-x-0 max-w-lg mx-auto w-full z-[101] bottom-0 translate-y-full bg-white rounded-t-3xl shadow-2xl px-4 py-5 pt-8 max-h-[85vh] overflow-y-auto'>
                 <WaitingForDriver
                     ride={ride}
                     setVehicleFound={setVehicleFound}
