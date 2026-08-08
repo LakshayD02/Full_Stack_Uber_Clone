@@ -45,62 +45,79 @@ const Riding = () => {
         setStep('paid')
     }
 
+    useEffect(() => {
+        if (step === 'paid') {
+            const timer = setTimeout(() => {
+                navigate('/home')
+            }, 3500)
+            return () => clearTimeout(timer)
+        }
+    }, [step, navigate])
+
     // Step: paid confirmation screen
     if (step === 'paid') {
         return (
-            <div className='h-screen flex flex-col items-center justify-center bg-gray-50 px-6'>
+            <div className='h-screen flex flex-col items-center justify-center bg-gray-50 px-6 py-8 overflow-y-auto'>
                 {/* Success animation */}
-                <div className='mb-6 relative'>
-                    <div className='h-28 w-28 rounded-full bg-green-100 flex items-center justify-center'>
+                <div className='mb-4 relative'>
+                    <div className='h-24 w-24 rounded-full bg-green-100 flex items-center justify-center'>
                         <i className="ri-check-double-fill text-5xl text-green-500"></i>
                     </div>
-                    <div className='absolute -top-1 -right-1 h-6 w-6 rounded-full bg-green-400 animate-ping'></div>
+                    <div className='absolute -top-1 -right-1 h-5 w-5 rounded-full bg-green-400 animate-ping'></div>
                 </div>
-                <h2 className='text-2xl font-black text-gray-900 mb-2 text-center'>Payment Confirmed!</h2>
+                <h2 className='text-2xl font-black text-gray-900 mb-1 text-center'>Payment Confirmed!</h2>
                 <p className='text-gray-500 text-sm text-center mb-1'>You paid <span className='font-bold text-gray-800'>₹{ride?.fare}</span> cash</p>
-                <p className='text-gray-400 text-xs text-center mb-8'>Waiting for captain to confirm receipt...</p>
+                <p className='text-gray-400 text-xs text-center mb-6'>Waiting for captain to confirm receipt...</p>
 
                 {/* Ride summary */}
-                <div className='w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-6'>
-                    <div className='flex items-center gap-3 p-4 border-b border-gray-50'>
-                        <div className='h-9 w-9 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0'>
+                <div className='w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden mb-4'>
+                    <div className='flex items-center gap-3 p-3.5 border-b border-gray-50'>
+                        <div className='h-8 w-8 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0'>
                             <i className="ri-circle-fill text-green-500 text-xs"></i>
                         </div>
                         <div className='flex-1 min-w-0'>
                             <p className='text-xs text-gray-400'>Pickup</p>
-                            <p className='text-sm font-semibold text-gray-800 truncate'>{ride?.pickup}</p>
+                            <p className='text-xs font-semibold text-gray-800 truncate'>{ride?.pickup}</p>
                         </div>
                     </div>
-                    <div className='flex items-center gap-3 p-4'>
-                        <div className='h-9 w-9 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0'>
+                    <div className='flex items-center gap-3 p-3.5'>
+                        <div className='h-8 w-8 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0'>
                             <i className="ri-map-pin-fill text-red-500 text-xs"></i>
                         </div>
                         <div className='flex-1 min-w-0'>
                             <p className='text-xs text-gray-400'>Destination</p>
-                            <p className='text-sm font-semibold text-gray-800 truncate'>{ride?.destination}</p>
+                            <p className='text-xs font-semibold text-gray-800 truncate'>{ride?.destination}</p>
                         </div>
                     </div>
                 </div>
 
                 {/* Captain info */}
-                <div className='w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-100 p-4 flex items-center gap-3 mb-8'>
-                    <div className='h-12 w-12 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 border-2 border-gray-200'>
-                        <i className="ri-user-3-fill text-gray-500 text-xl"></i>
+                <div className='w-full max-w-sm bg-white rounded-2xl shadow-sm border border-gray-100 p-3.5 flex items-center gap-3 mb-6'>
+                    <div className='h-11 w-11 rounded-full bg-gray-100 flex items-center justify-center flex-shrink-0 border-2 border-gray-200'>
+                        <i className="ri-user-3-fill text-gray-500 text-lg"></i>
                     </div>
                     <div>
-                        <p className='text-xs text-gray-400'>Your Captain</p>
-                        <h4 className='font-bold capitalize text-gray-900'>{ride?.captain?.fullname?.firstname} {ride?.captain?.fullname?.lastname}</h4>
+                        <p className='text-[10px] text-gray-400 uppercase font-semibold'>Your Captain</p>
+                        <h4 className='font-bold text-sm capitalize text-gray-900'>{ride?.captain?.fullname?.firstname} {ride?.captain?.fullname?.lastname}</h4>
                         <p className='text-xs text-gray-500 uppercase tracking-wider'>{ride?.captain?.vehicle?.plate}</p>
                     </div>
-                    <div className='ml-auto flex items-center gap-1 bg-green-50 px-2.5 py-1.5 rounded-xl'>
+                    <div className='ml-auto flex items-center gap-1 bg-green-50 px-2.5 py-1 rounded-xl'>
                         <i className="ri-money-rupee-circle-fill text-green-500 text-sm"></i>
                         <span className='text-sm font-black text-green-700'>₹{ride?.fare}</span>
                     </div>
                 </div>
 
-                <div className='flex items-center gap-2 text-xs text-gray-400'>
-                    <div className='h-2 w-2 rounded-full bg-yellow-400 animate-pulse'></div>
-                    Captain is confirming your payment...
+                <div className='w-full max-w-sm flex flex-col items-center gap-2'>
+                    <p className='text-xs text-gray-400 animate-pulse flex items-center gap-1.5'>
+                        <span className='h-2 w-2 rounded-full bg-green-500'></span>
+                        Redirecting to home in 3 seconds...
+                    </p>
+                    <button
+                        onClick={() => navigate('/home')}
+                        className='w-full bg-black text-white font-bold py-3.5 rounded-2xl text-base hover:bg-gray-900 transition-colors shadow-lg active:scale-98'
+                    >
+                        Done — Return to Home
+                    </button>
                 </div>
             </div>
         )
