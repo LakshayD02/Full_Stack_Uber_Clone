@@ -25,7 +25,7 @@ const RidePopUp = (props) => {
                     />
                     <div>
                         <h2 className='text-base font-bold capitalize'>
-                            {props.ride?.user.fullname.firstname} {props.ride?.user.fullname.lastname}
+                            {props.ride?.user?.fullname?.firstname || 'Rider'} {props.ride?.user?.fullname?.lastname || ''}
                         </h2>
                         <div className='flex items-center gap-1'>
                             <i className="ri-star-fill text-yellow-500 text-xs"></i>

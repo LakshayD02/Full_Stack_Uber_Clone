@@ -21,8 +21,12 @@ const WaitingForDriver = (props) => {
                             alt='captain'
                         />
                         <div>
-                            <h2 className='text-base font-bold capitalize'>{props.ride?.captain.fullname.firstname} {props.ride?.captain.fullname.lastname}</h2>
-                            <p className='text-sm text-gray-500'>{props.ride?.captain.vehicle.vehicleType} · {props.ride?.captain.vehicle.color}</p>
+                            <h2 className='text-base font-bold capitalize'>
+                                {props.ride?.captain?.fullname?.firstname || 'Captain'} {props.ride?.captain?.fullname?.lastname || ''}
+                            </h2>
+                            <p className='text-sm text-gray-500'>
+                                {props.ride?.captain?.vehicle?.vehicleType || 'Vehicle'} · {props.ride?.captain?.vehicle?.color || ''}
+                            </p>
                             <div className='flex items-center gap-1 text-yellow-500'>
                                 <i className="ri-star-fill text-xs"></i>
                                 <span className='text-xs font-medium text-gray-700'>4.9</span>
@@ -30,7 +34,9 @@ const WaitingForDriver = (props) => {
                         </div>
                     </div>
                     <div className='text-right'>
-                        <h4 className='text-xl font-black tracking-wider'>{props.ride?.captain.vehicle.plate}</h4>
+                        <h4 className='text-xl font-black tracking-wider'>
+                            {props.ride?.captain?.vehicle?.plate || '----'}
+                        </h4>
                         <p className='text-xs text-gray-400'>Vehicle number</p>
                     </div>
                 </div>

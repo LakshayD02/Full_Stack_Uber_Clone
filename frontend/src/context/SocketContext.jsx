@@ -16,13 +16,14 @@ const SocketProvider = ({ children }) => {
             console.log('Connected to server:', socket.id);
         });
 
-        socket.on('disconnect', () => {
-            console.log('Disconnected from server');
+        socket.on('connect_error', (err) => {
+            // Silently handle socket errors on serverless environments like Vercel
         });
 
         return () => {
             socket.off('connect');
             socket.off('disconnect');
+            socket.off('connect_error');
         };
     }, []);
 

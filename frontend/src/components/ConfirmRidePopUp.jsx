@@ -52,7 +52,7 @@ const ConfirmRidePopUp = (props) => {
                         alt='rider'
                     />
                     <div>
-                        <h2 className='text-base font-bold capitalize'>{props.ride?.user.fullname.firstname} {props.ride?.user.fullname.lastname}</h2>
+                        <h2 className='text-base font-bold capitalize'>{props.ride?.user?.fullname?.firstname || 'Rider'} {props.ride?.user?.fullname?.lastname || ''}</h2>
                         <div className='flex items-center gap-1 text-yellow-500'>
                             <i className="ri-star-fill text-xs"></i>
                             <span className='text-xs font-medium text-gray-700'>4.8 · Rider</span>
