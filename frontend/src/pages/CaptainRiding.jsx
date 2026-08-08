@@ -72,7 +72,7 @@ const CaptainRiding = () => {
             {/* Top — Map */}
             <div className='h-[75%] relative'>
                 <div className='fixed p-4 top-0 left-0 right-0 z-10 flex items-center justify-between'>
-                    <img className='w-16 filter drop-shadow-md' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="Uber" />
+                    <span className='text-xl font-black tracking-tight text-white drop-shadow-md'>Ride<span className='text-yellow-300'>X</span></span>
                     <Link to='/captain-home' className='h-10 w-10 bg-white shadow-lg flex items-center justify-center rounded-full hover:bg-gray-100 transition-colors'>
                         <i className="text-lg font-medium ri-home-5-line text-gray-700"></i>
                     </Link>

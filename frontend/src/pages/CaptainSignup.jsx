@@ -159,9 +159,9 @@ const CaptainSignup = () => {
                     className='bg-gray-900 border border-white/10 rounded-2xl px-4 py-3 w-full text-white focus:outline-none focus:border-yellow-400 text-sm'
                   >
                     <option value='' disabled>Select Type</option>
-                    <option value='car'>Car (UberGo)</option>
+                    <option value='car'>Car (RideX Go)</option>
                     <option value='motorcycle'>Moto</option>
-                    <option value='auto'>UberAuto</option>
+                    <option value='auto'>RideX Auto</option>
                   </select>
                 </div>
               </div>

@@ -7,12 +7,7 @@ const Navbar = ({ mode = 'user' }) => {
   return (
     <header className='w-full z-50 px-6 py-4 flex items-center justify-between bg-black/90 backdrop-blur-md border-b border-white/10'>
       <Link to='/' className='flex items-center gap-2'>
-        <img
-          className='h-7'
-          src='https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png'
-          alt='Uber'
-          style={{ filter: 'invert(1)' }}
-        />
+        <span className='text-xl font-black tracking-tight text-white'>Ride<span className='text-blue-400'>X</span></span>
       </Link>
 
       <nav className='hidden md:flex items-center gap-6 text-sm text-gray-300'>

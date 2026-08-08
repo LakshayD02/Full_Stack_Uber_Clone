@@ -94,7 +94,7 @@ const Captainlogin = () => {
 
           <div className='mt-6 text-center space-y-3 text-sm'>
             <p className='text-gray-400'>
-              Want to drive with Uber?{' '}
+              Want to drive with RideX?{' '}
               <Link to='/captain-signup' className='text-yellow-400 font-semibold hover:underline'>Register as Captain</Link>
             </p>
             <div className='border-t border-white/10 pt-4'>

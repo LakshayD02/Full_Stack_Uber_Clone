@@ -2,11 +2,11 @@ import React from 'react'
 
 const ConfirmRide = (props) => {
     const vehicleImages = {
-        car: 'https://www.pngmart.com/files/12/Uber-PNG-Photos.png',
+        car: 'https://cdn-icons-png.flaticon.com/512/3202/3202003.png',
         moto: 'https://cdn-icons-png.flaticon.com/512/3097/3097136.png',
         auto: 'https://cdn-icons-png.flaticon.com/512/1048/1048313.png',
     }
-    const vehicleNames = { car: 'UberGo', moto: 'Moto', auto: 'UberAuto' }
+    const vehicleNames = { car: 'RideX Go', moto: 'Moto', auto: 'RideX Auto' }
 
     return (
         <div>

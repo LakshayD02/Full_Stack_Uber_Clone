@@ -9,12 +9,7 @@ const Start = () => {
 
       {/* ── HEADER ── */}
       <header className='fixed top-0 left-0 right-0 z-50 px-6 py-4 flex items-center justify-between bg-black/80 backdrop-blur-md border-b border-white/10'>
-        <img
-          className='h-8'
-          src='https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png'
-          alt='Uber'
-          style={{ filter: 'invert(1)' }}
-        />
+        <span className='text-2xl font-black tracking-tight text-white'>Ride<span className='text-blue-400'>X</span></span>
         <nav className='hidden md:flex items-center gap-6 text-sm text-gray-300'>
           <a href='#features' className='hover:text-white transition-colors'>Features</a>
           <a href='#safety' className='hover:text-white transition-colors'>Safety</a>
@@ -77,7 +72,7 @@ const Start = () => {
                 </span>
               </h1>
               <p className='text-lg md:text-xl text-gray-300 mb-10 max-w-xl mx-auto'>
-                Request a ride, hop in, and go. Uber makes transportation
+                Request a ride, hop in, and go. RideX makes transportation
                 across cities easier, faster, and safer than ever.
               </p>
               <div className='flex flex-col sm:flex-row items-center justify-center gap-4'>
@@ -104,7 +99,7 @@ const Start = () => {
               <h1 className='text-5xl md:text-7xl font-black mb-6 leading-tight'>
                 Drive with<br />
                 <span className='bg-gradient-to-r from-yellow-400 to-orange-400 bg-clip-text text-transparent'>
-                  Uber.
+                  RideX.
                 </span>
               </h1>
               <p className='text-lg md:text-xl text-gray-300 mb-10 max-w-xl mx-auto'>
@@ -140,7 +135,7 @@ const Start = () => {
       <section id='features' className='py-24 px-6 bg-black'>
         <div className='max-w-5xl mx-auto'>
           <h2 className='text-3xl md:text-5xl font-black text-center mb-4'>
-            Why choose <span className='text-gray-400'>Uber?</span>
+            Why choose <span className='text-blue-400'>RideX?</span>
           </h2>
           <p className='text-center text-gray-400 mb-16 max-w-xl mx-auto'>
             Every ride is designed to be safe, affordable, and on time.
@@ -164,7 +159,7 @@ const Start = () => {
                 icon: 'ri-money-rupee-circle-fill',
                 color: 'from-yellow-500 to-orange-500',
                 title: 'Best Fares',
-                desc: 'Upfront pricing with no surge surprises. Choose from UberGo, Moto, or Auto.'
+                desc: 'Upfront pricing with no surge surprises. Choose from RideX Go, Moto, or Auto.'
               }
             ].map((f, i) => (
               <div
@@ -236,12 +231,7 @@ const Start = () => {
         <div className='max-w-5xl mx-auto'>
           <div className='flex flex-col md:flex-row justify-between gap-12 mb-12'>
             <div className='max-w-xs'>
-              <img
-                className='h-7 mb-4'
-                src='https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png'
-                alt='Uber'
-                style={{ filter: 'invert(1)' }}
-              />
+              <span className='text-2xl font-black tracking-tight text-white block mb-4'>Ride<span className='text-blue-400'>X</span></span>
               <p className='text-gray-400 text-sm leading-relaxed'>
                 Making transportation as reliable as running water, everywhere, for everyone.
               </p>
@@ -274,7 +264,7 @@ const Start = () => {
             </div>
           </div>
           <div className='border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4'>
-            <p className='text-gray-500 text-sm'>© 2025 Uber Technologies Inc. All rights reserved.</p>
+            <p className='text-gray-500 text-sm'>© 2025 RideX. All rights reserved.</p>
             <div className='flex gap-4'>
               {['ri-twitter-fill', 'ri-instagram-fill', 'ri-linkedin-fill', 'ri-github-fill'].map((icon, i) => (
                 <a key={i} href='#' className='h-9 w-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors'>

@@ -94,7 +94,7 @@ const UserLogin = () => {
 
           <div className='mt-6 text-center space-y-3 text-sm'>
             <p className='text-gray-400'>
-              New to Uber?{' '}
+              New to RideX?{' '}
               <Link to='/signup' className='text-white font-semibold hover:underline'>Create account</Link>
             </p>
             <div className='border-t border-white/10 pt-4'>

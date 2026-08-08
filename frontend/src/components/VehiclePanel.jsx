@@ -4,7 +4,7 @@ const VehiclePanel = (props) => {
     const vehicles = [
         {
             key: 'car',
-            name: 'UberGo',
+            name: 'RideX Go',
             capacity: 4,
             eta: '2 min',
             desc: 'Affordable, compact rides',
@@ -20,7 +20,7 @@ const VehiclePanel = (props) => {
         },
         {
             key: 'auto',
-            name: 'UberAuto',
+            name: 'RideX Auto',
             capacity: 3,
             eta: '3 min',
             desc: 'Affordable auto rides',

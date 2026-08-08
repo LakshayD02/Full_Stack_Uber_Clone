@@ -114,7 +114,7 @@ const CaptainHome = () => {
             {/* Modern Floating Captain Top Bar */}
             <div className='fixed top-3 left-3 right-3 z-50 flex items-center justify-between px-4 py-2.5 bg-white/85 backdrop-blur-xl rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] border border-white/60 transition-all'>
                 <div className='flex items-center gap-3'>
-                    <img className='h-6 filter drop-shadow' src="https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png" alt="Uber" />
+                    <span className='text-lg font-black tracking-tight text-gray-900'>Ride<span className='text-blue-500'>X</span></span>
                     <span className='h-4 w-px bg-gray-200'></span>
                     <div className='flex items-center gap-1.5 bg-green-50 px-2.5 py-1 rounded-full border border-green-200'>
                         <span className='h-2 w-2 rounded-full bg-green-500 animate-pulse'></span>

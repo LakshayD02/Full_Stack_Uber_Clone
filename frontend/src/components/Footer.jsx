@@ -6,13 +6,8 @@ const Footer = () => {
     <footer className='bg-black border-t border-white/10 py-10 px-6 text-gray-400 text-sm mt-auto w-full'>
       <div className='max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6'>
         <div className='flex items-center gap-3'>
-          <img
-            className='h-6'
-            src='https://upload.wikimedia.org/wikipedia/commons/c/cc/Uber_logo_2018.png'
-            alt='Uber'
-            style={{ filter: 'invert(1)' }}
-          />
-          <span className='text-xs text-gray-500'>© 2025 Uber Technologies Inc.</span>
+          <span className='text-lg font-black tracking-tight text-white'>Ride<span className='text-blue-400'>X</span></span>
+          <span className='text-xs text-gray-500'>© 2025 RideX. All rights reserved.</span>
         </div>
 
         <div className='flex flex-wrap items-center gap-6 text-xs text-gray-400'>
