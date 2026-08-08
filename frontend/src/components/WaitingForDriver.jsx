@@ -80,6 +80,19 @@ const WaitingForDriver = (props) => {
                     </div>
                 </div>
             </div>
+
+            <button
+                onClick={() => {
+                    if (props.onCancel) {
+                        props.onCancel()
+                    } else {
+                        props.setWaitingForDriver(false)
+                    }
+                }}
+                className='w-full mt-4 bg-red-50 hover:bg-red-100 text-red-600 font-bold py-3.5 rounded-2xl text-sm transition-colors flex items-center justify-center gap-2 border border-red-200 active:scale-98 shadow-sm'
+            >
+                <i className="ri-close-circle-line text-lg"></i> Cancel Ride
+            </button>
         </div>
     )
 }

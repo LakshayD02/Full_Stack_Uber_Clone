@@ -254,6 +254,7 @@ const Home = () => {
             }
         }
         setVehicleFound(false)
+        setWaitingForDriver(false)
         setConfirmRidePanel(false)
         setVehiclePanel(false)
         setRide(null)
@@ -473,6 +474,7 @@ const Home = () => {
                     setVehicleFound={setVehicleFound}
                     setWaitingForDriver={setWaitingForDriver}
                     waitingForDriver={waitingForDriver}
+                    onCancel={handleCancelRide}
                 />
             </div>
         </div>

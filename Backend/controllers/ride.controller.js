@@ -212,10 +212,14 @@ module.exports.cancelRide = async (req, res) => {
 // Returns the current pending, accepted, or ongoing ride for the logged-in user (including OTP)
 module.exports.getUserActiveRide = async (req, res) => {
     try {
+        const twelveHoursAgo = new Date(Date.now() - 12 * 60 * 60 * 1000);
+
         const ride = await rideModel.findOne({
             user: req.user._id,
-            status: { $in: ['pending', 'accepted', 'ongoing'] }
+            status: { $in: ['pending', 'accepted', 'ongoing'] },
+            createdAt: { $gte: twelveHoursAgo }
         })
+        .sort({ createdAt: -1 })
         .populate('user')
         .populate('captain')
         .select('+otp');
