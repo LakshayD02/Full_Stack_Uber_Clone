@@ -53,17 +53,56 @@ const CaptainHome = () => {
         const locationInterval = setInterval(updateLocation, 10000)
         updateLocation()
 
+        const fetchPendingRides = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/pending`, {
+                    headers: {
+                        Authorization: `Bearer ${localStorage.getItem('token')}`
+                    }
+                })
+                if (response.data && response.data.length > 0) {
+                    const latestRide = response.data[0]
+                    setRide(prev => {
+                        if (!prev || prev._id !== latestRide._id) {
+                            setRidePopupPanel(true)
+                            return latestRide
+                        }
+                        return prev
+                    })
+                }
+            } catch (err) {
+                // Ignore silent polling errors
+            }
+        }
+
+        const pollInterval = setInterval(fetchPendingRides, 3000)
+        fetchPendingRides()
+
         const handleNewRide = (data) => {
             setRide(data)
             setRidePopupPanel(true)
         }
 
+        const handleRideCancelled = (data) => {
+            setRide(prev => {
+                if (prev && prev._id === data.rideId) {
+                    setRidePopupPanel(false)
+                    setConfirmRidePopupPanel(false)
+                    return null
+                }
+                return prev
+            })
+        }
+
         socket.on('new-ride', handleNewRide)
+        socket.on('ride-cancelled', handleRideCancelled)
 
         return () => {
             clearInterval(locationInterval)
+            clearInterval(pollInterval)
             socket.off('connect', registerCaptain)
             socket.off('new-ride', handleNewRide)
+            socket.off('ride-cancelled', handleRideCancelled)
         }
     }, [captain, socket])
 

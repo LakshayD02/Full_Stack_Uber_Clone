@@ -146,13 +146,38 @@ const Home = () => {
     }
 
     async function createRide() {
-        await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
-            pickup,
-            destination,
-            vehicleType
-        }, {
-            headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
-        })
+        try {
+            const response = await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/create`, {
+                pickup,
+                destination,
+                vehicleType
+            }, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            })
+            if (response.data) {
+                setRide(response.data)
+            }
+        } catch (err) {
+            console.error("Error creating ride:", err)
+        }
+    }
+
+    async function handleCancelRide() {
+        if (ride?._id) {
+            try {
+                await axios.post(`${import.meta.env.VITE_BASE_URL}/rides/cancel`, {
+                    rideId: ride._id
+                }, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                })
+            } catch (err) {
+                console.error("Error cancelling ride:", err)
+            }
+        }
+        setVehicleFound(false)
+        setConfirmRidePanel(false)
+        setVehiclePanel(false)
+        setRide(null)
     }
 
     const getCurrentLocation = () => {
@@ -357,6 +382,7 @@ const Home = () => {
                     fare={fare}
                     vehicleType={vehicleType}
                     setVehicleFound={setVehicleFound}
+                    onCancel={handleCancelRide}
                 />
             </div>
 

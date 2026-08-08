@@ -44,4 +44,15 @@ router.get('/captain-stats',
     rideController.getCaptainStats
 )
 
+router.get('/pending',
+    authMiddleware.authCaptain,
+    rideController.getPendingRides
+)
+
+router.post('/cancel',
+    authMiddleware.authUser,
+    body('rideId').isMongoId().withMessage('Invalid ride id'),
+    rideController.cancelRide
+)
+
 module.exports = router;

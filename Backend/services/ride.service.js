@@ -161,3 +161,27 @@ module.exports.endRide = async ({ rideId, captain }) => {
     return ride
 }
 
+module.exports.cancelRide = async ({ rideId, userId }) => {
+    if (!rideId) {
+        throw new Error('Ride id is required');
+    }
+
+    const ride = await rideModel.findOne({
+        _id: rideId,
+        user: userId,
+        status: { $in: ['pending', 'accepted'] }
+    }).populate('user').populate('captain');
+
+    if (!ride) {
+        throw new Error('Ride not found or cannot be cancelled');
+    }
+
+    await rideModel.findOneAndUpdate(
+        { _id: rideId },
+        { status: 'cancelled' }
+    );
+
+    return ride;
+};
+
+

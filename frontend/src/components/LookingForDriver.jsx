@@ -47,10 +47,23 @@ const LookingForDriver = (props) => {
                     </div>
                     <div>
                         <p className='text-xs text-gray-400 mb-0.5'>Fare</p>
-                        <p className='font-bold text-gray-800 text-lg'>₹{props.fare[props.vehicleType]}</p>
+                        <p className='font-bold text-gray-800 text-lg'>₹{props.fare ? props.fare[props.vehicleType] : '--'}</p>
                     </div>
                 </div>
             </div>
+
+            <button
+                onClick={() => {
+                    if (props.onCancel) {
+                        props.onCancel()
+                    } else {
+                        props.setVehicleFound(false)
+                    }
+                }}
+                className='w-full bg-red-50 hover:bg-red-100 text-red-600 font-bold py-3.5 rounded-2xl text-base transition-colors flex items-center justify-center gap-2 border border-red-200'
+            >
+                <i className="ri-close-circle-line text-lg"></i> Cancel Trip
+            </button>
         </div>
     )
 }

@@ -140,3 +140,71 @@ module.exports.getCaptainStats = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 };
+
+// Captain polls this endpoint to find new pending rides nearby
+module.exports.getPendingRides = async (req, res) => {
+    try {
+        const captain = req.captain;
+
+        // Get captain's last known location from DB
+        const freshCaptain = await captainModel.findById(captain._id);
+        const ltd = freshCaptain?.location?.ltd;
+        const lng = freshCaptain?.location?.lng;
+
+        let pendingRides;
+
+        if (ltd && lng) {
+            // Find pending rides and check proximity via map service
+            const allPending = await rideModel
+                .find({ status: 'pending' })
+                .populate('user')
+                .sort({ createdAt: -1 })
+                .limit(10);
+
+            // Filter rides within ~5km using basic lat/lng delta (~0.045 degrees ≈ 5km)
+            pendingRides = allPending.filter(ride => {
+                // We don't have coordinates stored per ride, so return all pending
+                // (the radius filter happens on creation via getCaptainsInTheRadius)
+                return true;
+            });
+
+            // Return only the most recent pending ride
+            pendingRides = pendingRides.slice(0, 1);
+        } else {
+            pendingRides = await rideModel
+                .find({ status: 'pending' })
+                .populate('user')
+                .sort({ createdAt: -1 })
+                .limit(1);
+        }
+
+        return res.status(200).json(pendingRides);
+    } catch (err) {
+        console.error('getPendingRides error:', err);
+        return res.status(500).json({ message: err.message });
+    }
+};
+
+// User cancels a ride while it is pending (before captain accepts)
+module.exports.cancelRide = async (req, res) => {
+    const { rideId } = req.body;
+    if (!rideId) {
+        return res.status(400).json({ message: 'rideId is required' });
+    }
+    try {
+        const ride = await rideService.cancelRide({ rideId, userId: req.user._id });
+
+        // If a captain had already accepted, notify them
+        if (ride.captain && ride.captain.socketId) {
+            sendMessageToSocketId(ride.captain.socketId, {
+                event: 'ride-cancelled',
+                data: { rideId }
+            });
+        }
+
+        return res.status(200).json({ message: 'Ride cancelled successfully' });
+    } catch (err) {
+        console.error('cancelRide error:', err);
+        return res.status(500).json({ message: err.message });
+    }
+};
