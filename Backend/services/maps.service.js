@@ -96,7 +96,7 @@ module.exports.getAutoCompleteSuggestions = async (input) => {
     // OpenStreetMap Nominatim live search fallback
     try {
         const nomUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(input)}&countrycodes=in&limit=5`;
-        const res = await axios.get(nomUrl, { headers: { 'User-Agent': 'UberCloneApp/1.0' } });
+        const res = await axios.get(nomUrl, { headers: { 'User-Agent': 'UberCloneApp/1.0' }, timeout: 1000 });
         if (res.data && res.data.length > 0) {
             return res.data.map(item => item.display_name);
         }

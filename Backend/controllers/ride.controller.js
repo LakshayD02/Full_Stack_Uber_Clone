@@ -208,3 +208,21 @@ module.exports.cancelRide = async (req, res) => {
         return res.status(500).json({ message: err.message });
     }
 };
+
+// Returns the current pending, accepted, or ongoing ride for the logged-in user (including OTP)
+module.exports.getUserActiveRide = async (req, res) => {
+    try {
+        const ride = await rideModel.findOne({
+            user: req.user._id,
+            status: { $in: ['pending', 'accepted', 'ongoing'] }
+        })
+        .populate('user')
+        .populate('captain')
+        .select('+otp');
+
+        return res.status(200).json(ride || null);
+    } catch (err) {
+        console.error('getUserActiveRide error:', err);
+        return res.status(500).json({ message: err.message });
+    }
+};

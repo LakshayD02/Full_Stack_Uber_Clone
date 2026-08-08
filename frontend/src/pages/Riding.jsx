@@ -2,24 +2,39 @@ import React, { useEffect, useContext, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { SocketContext } from '../context/SocketContext'
 import LiveTracking from '../components/LiveTracking'
+import axios from 'axios'
 
 const Riding = () => {
     const location = useLocation()
-    const { ride } = location.state || {}
     const { socket } = useContext(SocketContext)
     const navigate = useNavigate()
+
+    const [currentRide, setCurrentRide] = useState(location.state?.ride || null)
+    const ride = currentRide
 
     // step: 'riding' | 'pay' | 'paid'
     const [step, setStep] = useState('riding')
 
     useEffect(() => {
+        if (!currentRide) {
+            axios.get(`${import.meta.env.VITE_BASE_URL}/rides/user-active-ride`, {
+                headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+            }).then(res => {
+                if (res.data && (res.data.status === 'ongoing' || res.data.status === 'accepted')) {
+                    setCurrentRide(res.data)
+                } else {
+                    navigate('/home')
+                }
+            }).catch(() => navigate('/home'))
+        }
+
         const handleRideEnded = () => {
             // Only navigate home after captain finishes the ride
             navigate('/home')
         }
         socket.on('ride-ended', handleRideEnded)
         return () => socket.off('ride-ended', handleRideEnded)
-    }, [socket, navigate])
+    }, [socket, navigate, currentRide])
 
     const handlePay = () => {
         // Notify captain that payment has been made

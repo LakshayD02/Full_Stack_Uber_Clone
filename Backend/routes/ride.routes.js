@@ -55,4 +55,9 @@ router.post('/cancel',
     rideController.cancelRide
 )
 
+router.get('/user-active-ride',
+    authMiddleware.authUser,
+    rideController.getUserActiveRide
+)
+
 module.exports = router;

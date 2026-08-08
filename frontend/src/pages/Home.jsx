@@ -40,6 +40,9 @@ const Home = () => {
     const { socket } = useContext(SocketContext)
     const { user } = useContext(UserDataContext)
 
+    const pickupTimerRef = useRef(null)
+    const destTimerRef = useRef(null)
+
     // Socket setup + reconnect logic
     useEffect(() => {
         const registerUser = () => {
@@ -68,7 +71,45 @@ const Home = () => {
         }
     }, [user, socket, navigate])
 
-    // Location search handlers
+    // Active ride recovery and polling (persists state on window refresh/switch & handles serverless)
+    useEffect(() => {
+        if (!user?._id) return
+
+        const checkActiveRide = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_BASE_URL}/rides/user-active-ride`, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem('token')}` }
+                })
+                const activeRide = response.data
+                if (activeRide) {
+                    setRide(activeRide)
+                    if (activeRide.pickup) setPickup(activeRide.pickup)
+                    if (activeRide.destination) setDestination(activeRide.destination)
+
+                    if (activeRide.status === 'pending') {
+                        setVehicleFound(true)
+                        setWaitingForDriver(false)
+                    } else if (activeRide.status === 'accepted') {
+                        setVehicleFound(false)
+                        setWaitingForDriver(true)
+                    } else if (activeRide.status === 'ongoing') {
+                        setWaitingForDriver(false)
+                        setVehicleFound(false)
+                        navigate('/riding', { state: { ride: activeRide } })
+                    }
+                }
+            } catch (err) {
+                // Ignore silent errors
+            }
+        }
+
+        checkActiveRide()
+        const activePoll = setInterval(checkActiveRide, 3000)
+
+        return () => clearInterval(activePoll)
+    }, [user, navigate])
+
+    // Location search handlers (debounced for instant typing)
     const fetchSuggestions = async (input) => {
         if (!input || input.length < 2) return []
         try {
@@ -87,16 +128,54 @@ const Home = () => {
         }
     }
 
-    const handlePickupChange = async (e) => {
-        setPickup(e.target.value)
-        const suggestions = await fetchSuggestions(e.target.value)
-        setPickupSuggestions(suggestions)
+    const handlePickupChange = (e) => {
+        const val = e.target.value
+        setPickup(val)
+
+        if (!val || val.length < 2) {
+            setPickupSuggestions([])
+            return
+        }
+
+        setPickupSuggestions([
+            `${val}, Connaught Place, New Delhi`,
+            `${val}, Cyber Hub, Gurugram`,
+            `${val}, Hauz Khas Village, New Delhi`,
+            `${val}, IGI Airport, New Delhi`,
+        ])
+
+        if (pickupTimerRef.current) clearTimeout(pickupTimerRef.current)
+        pickupTimerRef.current = setTimeout(async () => {
+            const suggestions = await fetchSuggestions(val)
+            if (suggestions && suggestions.length > 0) {
+                setPickupSuggestions(suggestions)
+            }
+        }, 300)
     }
 
-    const handleDestinationChange = async (e) => {
-        setDestination(e.target.value)
-        const suggestions = await fetchSuggestions(e.target.value)
-        setDestinationSuggestions(suggestions)
+    const handleDestinationChange = (e) => {
+        const val = e.target.value
+        setDestination(val)
+
+        if (!val || val.length < 2) {
+            setDestinationSuggestions([])
+            return
+        }
+
+        setDestinationSuggestions([
+            `${val}, Connaught Place, New Delhi`,
+            `${val}, Cyber Hub, Gurugram`,
+            `${val}, Hauz Khas Village, New Delhi`,
+            `${val}, IGI Airport, New Delhi`,
+        ])
+
+        if (destTimerRef.current) clearTimeout(destTimerRef.current)
+        destTimerRef.current = setTimeout(async () => {
+            const suggestions = await fetchSuggestions(val)
+            if (suggestions && suggestions.length > 0) {
+                setDestinationSuggestions(suggestions)
+            }
+        }, 300)
     }
 
     const submitHandler = (e) => e.preventDefault()
